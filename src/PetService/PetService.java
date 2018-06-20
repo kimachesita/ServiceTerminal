@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.Scanner;
 
 import Server.Service;
+import Server.ServiceReturnType;
 
 public class PetService extends Service{
 	
@@ -15,7 +16,7 @@ public class PetService extends Service{
 	}
 
 	@Override
-	public int start() throws IOException {
+	public ServiceReturnType start() throws IOException {
 		Scanner scanner = new Scanner(super.in);
 		String input;
 		Controller controller = new Controller();
@@ -27,7 +28,7 @@ public class PetService extends Service{
 		}while(controller.process(input) == 0);
 		
 		scanner.close();
-		return 0;
+		return ServiceReturnType.EXIT;
 	}
 	
 }

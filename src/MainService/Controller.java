@@ -1,38 +1,35 @@
 package MainService;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import Server.Service;
-
 public class Controller {
 
-	private HashMap<String,Handler> directoryList;
+	private HashMap<String,Handler> handlerList = new HashMap<>();
+	private OutputStream out;
 	
-	public Controller(HashMap<String,Service> d) {
-		for(Map.Entry<String, Service> entry : d.entrySet()) {
-			directoryList.put(entry.getKey(),new OptionHandler(entry.getKey()));
+	public Controller(HashMap<Integer, String> t, OutputStream o) {
+		out = o;
+		for(Map.Entry<Integer, String> entry : t.entrySet()) {
+			handlerList.put(entry.getValue(),new OptionHandler(entry.getKey()));
 		}
+		handlerList.put("show", new ShowHandler());
+		handlerList.put("exit", new ExitHandler());
+		((ShowHandler) handlerList.get("show")).setConfig(handlerList,out);
 		
 	}
 	
-	public int process(String input) {
+	public int process(String input) throws IOException {
 		Handler h;
-
 		
 		try {
-			if(input.matches("\\w*:.+")) {
-				word = "add";
-			}else {
-				word = input;
-			}
-			h = hm.get(word);
-			return h.execute(input);
+			h = handlerList.get(input);
+			return h.execute();
 		} catch (NullPointerException e) {
-			System.out.println("No handler for command.");
-			return 0;
+			//out.write(("No handler for command <" + input + "> \n").getBytes());
+			e.printStackTrace();
+			return -2;
 		}
-		
-		
-		
 	}
 }

@@ -2,14 +2,12 @@ package MainService;
 
 public class ExitHandler extends Handler {
 
-	public ExitHandler(AnimalList t) {
-		super(t);
+	public ExitHandler() {
 	}
 
 	@Override
-	public int execute(String val) {
-		System.out.println("Exiting Program...");
-		return 1;
+	public int execute() {
+		return -1;
 	}
 
 }

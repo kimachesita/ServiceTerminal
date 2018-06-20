@@ -3,40 +3,45 @@ package MainService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.Scanner;
+
+import PetService.PetService;
 import Server.Service;
+import Server.ServiceReturnType;
 
 public class MainService extends Service {
 	
-
-	private HashMap<String,Service> directory = new HashMap<>();
-	
 	public MainService(InputStream in,OutputStream out) {
 		super(in,out);
-	}
-	
-	//populate local directory copy
-	public void setDirectory(HashMap<String,Service> d) {
-		directory = d;
+		
+		//insert services under main service
+		addService(new PetService(in,out));
 	}
 	
 	@Override
-	public int start() throws IOException {
-		Scanner scanner = new Scanner(super.in);
+	public ServiceReturnType start() throws IOException {
+		Scanner scanner = new Scanner(this.in);
+		Controller controller = new Controller(serviceDirectoryTable,out);
 		String input;
-		Controller controller = new Controller(directory);
+		Integer returnValue;
 		
-		super.write("=============================================\n");
-		super.write("Welcome to Service Terminal\n");
-		super.write("Type: \"show\" to show available options.\n");
+		write("=============================================\n");
+		write("Welcome to Service Terminal\n");
+		write("Type \"show\" to show available options.\n");
 		
 		do {
-			super.write("Enter your option here >>");
+			write("Main: Enter your option here >>");
+			
 			input = scanner.nextLine();
-		}while(controller.process(input) == 0);
+			returnValue = controller.process(input);
+			
+			if(returnValue > -1) {
+				selectService(serviceDirectory.get(serviceDirectoryTable.get(returnValue)));
+			}
+			
+		}while(returnValue != -1);
 		scanner.close();
-		return 0;
-	}
-	
+		write("Sevice Exiting...\n");
+		return ServiceReturnType.EXIT;
+	}	
 }

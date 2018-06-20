@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import MainService.MainService;
-import PetService.PetService;
 
 public class Controller {
 	//in and out corresponds to io streams from network utility
@@ -15,25 +14,25 @@ public class Controller {
 	private OutputStream out;
 	private HashMap<String,Service> serviceDirectory = new HashMap<>();
 	private Stack<Service> serviceTree = new Stack<>();
-	
+
 	public Controller(InputStream i, OutputStream o ) {
 		in = i;
 		out = o;
-		
+
 		//populate serviceDirectory
 		serviceDirectory.put("Main", new MainService(in,out));
-		serviceDirectory.put("Pet", new PetService(in,out));
-		
-		
-		//pass serviceDirectory to "Main" for reference
-		((MainService) serviceDirectory.get("Main")).setDirectory(serviceDirectory);
-		
+
 		//set initial serviceTree to main
 		serviceTree.push(serviceDirectory.get("Main"));
 	}
-	
+
 	public void route() throws IOException {
-		int returnValue = serviceTree.peek().start();
+		while(!serviceTree.isEmpty()) {
+			if(serviceTree.peek().start() == ServiceReturnType.EXIT) {
+				serviceTree.pop();
+			}
+		}
+		//Client Exiting code here
 	}
-	
+
 }
