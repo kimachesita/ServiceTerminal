@@ -12,13 +12,13 @@ public class ConnectionsManager {
 		try {
 			serverSocket = new ServerSocket(p);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Server Error: Cannot Start Server at Port " + p);
 		}
 	}
 	
 	public void listen() {
 		//listen for new connections
 		connectionList.add(new Connection());
-		while(true);
+		//while(true);
 	}
 }

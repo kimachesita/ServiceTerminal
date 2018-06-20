@@ -2,9 +2,9 @@ package Parser;
 
 import java.util.HashMap;
 
-public abstract class Message {
-	public String type; //"RES", "REQ"
-	public HashMap<String,String> header;
+public class Message {
+
+	public HashMap<String,String> header = new HashMap<>();
 	public String body;
 	
 	
@@ -22,6 +22,14 @@ public abstract class Message {
 	
 	public void addHeaderService(String s) {
 		header.put("Service", s);
+	}
+	
+	public void addHeaderType(String s) {
+		header.put("Type", s);
+	}
+	
+	public void addHeaderMsgCode(String s) {
+		header.put("Code", s);
 	}
 	
 }
