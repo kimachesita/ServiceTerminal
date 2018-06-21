@@ -5,20 +5,22 @@ public class AnimalList {
 	private ArrayList<Animal> list = new ArrayList<>();
 	private ArrayList<Thread> tList = new ArrayList<>();
 	public String listName;
+	public IOInterface io;
 	
-	public AnimalList(String name) {
+	public AnimalList(String name, IOInterface o) {
 		this.listName = name;
+		io = o;
 	}
 	
 	public void addPet(Animal pet) {
 		list.add(pet);
-		System.out.println(pet.name + " added to " + this.listName);
+		io.writeln(pet.name + " added to " + this.listName);
 	}
 	
 	public void showAll() {
-		System.out.println("There are " + list.size() + " pets currently onboard.");
+		io.writeln("There are " + list.size() + " pets currently onboard.");
 		for(Animal pet : list) {
-			System.out.println("Pet: " +  pet.name + " the " + pet.getClass().getName());
+			io.writeln("Pet: " +  pet.name + " the " + pet.getClass().getName());
 		}
 	}
 	

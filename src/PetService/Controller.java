@@ -1,20 +1,24 @@
 package PetService;
+
 import java.util.HashMap;
 
 public class Controller {
 
 	private HashMap<String,Handler> hm;
 	
-	public Controller() {
-		AnimalList list = new AnimalList("Animal List");
+	public IOInterface io;
+	
+	public Controller(IOInterface o) {
+		AnimalList list = new AnimalList("Animal List", o);
 		hm = new HashMap<>();
-		hm.put("show", new ShowHandler(list));
-		hm.put("add", new AddPetHandler(list));
-		hm.put("simulate", new SimulateHandler(list));
-		hm.put("exit", new ExitHandler(list));
+		hm.put("show", new ShowHandler(list, o));
+		hm.put("add", new AddPetHandler(list, o));
+		hm.put("simulate", new SimulateHandler(list, o));
+		hm.put("exit", new ExitHandler(list, o));
+		io = o;
 	}
 	
-	public int process(String input) {
+	public int process(String input){
 		Handler h;
 		String word = new String();
 		
@@ -27,7 +31,7 @@ public class Controller {
 			h = hm.get(word);
 			return h.execute(input);
 		} catch (NullPointerException e) {
-			System.out.println("No handler for command.");
+			io.writeln("No handler for command.");
 			return 0;
 		}
 		

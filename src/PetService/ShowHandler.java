@@ -1,8 +1,8 @@
 package PetService;
 public final class ShowHandler extends Handler {
 
-	public ShowHandler(AnimalList t) {
-		super(t);
+	public ShowHandler(AnimalList t, IOInterface o) {
+		super(t, o);
 	}
 
 	@Override

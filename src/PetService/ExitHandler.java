@@ -2,13 +2,14 @@ package PetService;
 
 public class ExitHandler extends Handler {
 
-	public ExitHandler(AnimalList t) {
-		super(t);
+	
+	public ExitHandler(AnimalList t, IOInterface o) {
+		super(t, o);
 	}
 
 	@Override
 	public int execute(String val) {
-		System.out.println("Exiting Program...");
+		io.writeln("Exiting Service...");
 		return 1;
 	}
 

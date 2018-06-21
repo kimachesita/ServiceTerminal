@@ -2,9 +2,11 @@ package PetService;
 public abstract class Handler {
 	
 	private AnimalList list;
+	public IOInterface io;
 	
-	public Handler(AnimalList t) {
+	public Handler(AnimalList t, IOInterface o) {
 		list = t;
+		io = o;
 	}
 	
 	public abstract int execute(String val);

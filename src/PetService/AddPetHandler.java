@@ -1,10 +1,12 @@
 package PetService;
+
 import java.lang.reflect.InvocationTargetException;
-
 public class AddPetHandler extends Handler {
-
-	public AddPetHandler(AnimalList t) {
-		super(t);
+	
+	private String packageName = "PetService.";
+	
+	public AddPetHandler(AnimalList t, IOInterface o) {
+		super(t, o);
 	}
 
 	@Override
@@ -12,20 +14,24 @@ public class AddPetHandler extends Handler {
 		String name =  input.split(":")[0];
 		String type =  input.split(":")[1];
 		try {
-			Class<?> petClass = Class.forName(type);
+			Class<?> petClass = Class.forName(packageName + type);
 			if(name.isEmpty()) {
-				System.out.println("Name must not be empty.");
-				return 0;
+				io.writeln("Name must not be empty.");
 			}
-			Animal pet = (Animal)petClass.getConstructor(new Class[] { String.class }).newInstance(name);
+			Animal pet = (Animal)petClass.getConstructor(new Class[] { java.lang.String.class }).newInstance(name);
 			super.addToList(pet);
 		} catch ( InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			System.out.println("Error Creating Pet");
-			System.err.println(e.getMessage());
+			io.writeln("Error Creating Pet");
+			//System.err.println(e.getMessage());
+			e.printStackTrace();
 		} catch (ClassNotFoundException | NoClassDefFoundError e) {
-			System.out.println("Cannot spawn. Animal Currently extinct.");
+			//e.printStackTrace();
+			io.writeln("Cannot spawn. Animal Currently extinct.");
 		}
 		return 0;
 	}
-
 }
+
+
+
+

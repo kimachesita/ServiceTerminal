@@ -1,34 +1,36 @@
 package PetService;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.util.Scanner;
 
 import Server.Service;
 import Server.ServiceReturnType;
 
 public class PetService extends Service{
 	
+	public IOInterface outbox;
 	
-	public PetService(InputStream in,OutputStream out) {
+	public PetService(InputStream in, OutputStream out) {
 		super(in, out);
+		outbox = new IOInterface(in,out);
 	}
+
 
 	@Override
 	public ServiceReturnType start() throws IOException {
-		Scanner scanner = new Scanner(super.in);
+		BufferedReader br = new BufferedReader(new InputStreamReader(this.in));
 		String input;
-		Controller controller = new Controller();
+		Controller controller = new Controller(outbox);
 	
 		do {
-			super.write("pet to create >> ");
-			input = scanner.nextLine();
+			outbox.write("Pet: pet to create >> ");
+			input = br.readLine();
 			
 		}while(controller.process(input) == 0);
-		
-		scanner.close();
+	
 		return ServiceReturnType.EXIT;
 	}
-	
 }

@@ -27,8 +27,8 @@ public class Controller {
 			h = handlerList.get(input);
 			return h.execute();
 		} catch (NullPointerException e) {
-			//out.write(("No handler for command <" + input + "> \n").getBytes());
-			e.printStackTrace();
+			out.write(("No handler for command \"" + input + "\" \n").getBytes());
+			//e.printStackTrace();
 			return -2;
 		}
 	}

@@ -4,41 +4,44 @@ public abstract class Animal implements Runnable{
 	public String name;
 	private int slugRate;
 	public String title;
+	public IOInterface io;
 	
 	public void breakfast() {
-		System.out.println(title + " is eating breakfast...");
+		io.writeln(title + " is eating breakfast...");
 	}
 	public void poo() {
-		System.out.println(title + " is eating doing poo...");
+		io.writeln(title + " is eating doing poo...");
 	}
 	public void play() {
-		System.out.println(title + " is playing...");
+		io.writeln(title + " is playing...");
 	}
 	public void nap() {
-		System.out.println(title + " is napping...");
+		io.writeln(title + " is napping...");
 	}
 	public void lunch() {
-		System.out.println(title + " is eating lunch...");
+		io.writeln(title + " is eating lunch...");
 	}
 	public void sleep() {
-		System.out.println(title + " is now sleeping...");
+		io.writeln(title + " is now sleeping...");
 	}
 	
-	protected Animal(String n, int r) {
+	protected Animal(String n, int r, IOInterface o) {
 		name = n;
 		slugRate = r;
 		title = name + " the " + this.getClass().getName();
+		io = o;
 	}
 	
-	protected Animal(String n) {
+	protected Animal(String n, IOInterface o) {
 		name = n;
 		slugRate = 1000;
 		title = name + " the " + this.getClass().getName();
+		io = o;
 	}
 		
 	private void dayLifeCycle() {
 		try {
-			System.out.println(title + " begins day.");
+			io.writeln(title + " begins day.");
 			this.breakfast();
 			Thread.sleep(slugRate);
 			this.poo();
@@ -52,7 +55,7 @@ public abstract class Animal implements Runnable{
 			this.play();
 			Thread.sleep(slugRate);
 			this.sleep();
-			System.out.println(title +  " ends day.");
+			io.writeln(title +  " ends day.");
 		} catch (InterruptedException e) {
 			System.err.println(e);
 		}

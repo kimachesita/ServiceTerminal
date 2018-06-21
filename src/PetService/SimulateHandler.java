@@ -1,8 +1,8 @@
 package PetService;
 public class SimulateHandler extends Handler {
 
-	public SimulateHandler(AnimalList t) {
-		super(t);
+	public SimulateHandler(AnimalList t, IOInterface o) {
+		super(t, o);
 	}
 
 	@Override

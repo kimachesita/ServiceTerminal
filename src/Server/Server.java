@@ -16,6 +16,5 @@ public class Server {
 		System.out.println("Starting Server...");
 		Server server = new Server(8000);
 		server.listen();
-	}
-		
+	}	
 }

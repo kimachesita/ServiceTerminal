@@ -1,0 +1,11 @@
+{
+	"header": [
+		"origin":"172.28.61.10",
+		"destination":"172.28.61.11",
+		"authentication":"blablabla",
+		"status":"complete",
+		"service":"PET",
+		"type":"RES"
+	],
+	"body":"Pet to Create>>"
+}

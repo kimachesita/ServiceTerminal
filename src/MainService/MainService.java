@@ -1,9 +1,10 @@
 package MainService;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.util.Scanner;
 
 import PetService.PetService;
 import Server.Service;
@@ -20,7 +21,7 @@ public class MainService extends Service {
 	
 	@Override
 	public ServiceReturnType start() throws IOException {
-		Scanner scanner = new Scanner(this.in);
+		BufferedReader br = new BufferedReader(new InputStreamReader(this.in));
 		Controller controller = new Controller(serviceDirectoryTable,out);
 		String input;
 		Integer returnValue;
@@ -30,9 +31,9 @@ public class MainService extends Service {
 		write("Type \"show\" to show available options.\n");
 		
 		do {
-			write("Main: Enter your option here >>");
+			write("Main: Enter your option here >> ");
 			
-			input = scanner.nextLine();
+			input = br.readLine();
 			returnValue = controller.process(input);
 			
 			if(returnValue > -1) {
@@ -40,8 +41,7 @@ public class MainService extends Service {
 			}
 			
 		}while(returnValue != -1);
-		scanner.close();
-		write("Sevice Exiting...\n");
+		write("Exiting Service...\n");
 		return ServiceReturnType.EXIT;
 	}	
 }
