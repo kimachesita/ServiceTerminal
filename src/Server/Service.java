@@ -14,6 +14,7 @@ public abstract class Service {
 	protected HashMap<Integer,String> serviceDirectoryTable = new HashMap<>();
 	protected Stack<Service> serviceTree = new Stack<>();
 	protected String serviceName;
+	public String description;
 	
 	public Service(InputStream s, OutputStream d) {
 		in = s;

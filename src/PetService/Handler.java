@@ -3,6 +3,7 @@ public abstract class Handler {
 	
 	private AnimalList list;
 	public IOInterface io;
+	public String description;
 	
 	public Handler(AnimalList t, IOInterface o) {
 		list = t;

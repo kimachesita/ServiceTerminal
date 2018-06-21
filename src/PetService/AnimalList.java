@@ -18,9 +18,9 @@ public class AnimalList {
 	}
 	
 	public void showAll() {
-		io.writeln("There are " + list.size() + " pets currently onboard.");
+		io.writeln("There are " + list.size() + " pet(s) currently onboard.");
 		for(Animal pet : list) {
-			io.writeln("Pet: " +  pet.name + " the " + pet.getClass().getName());
+			io.writeln("Pet: " +  pet.name + " the " + pet.getClass().getSimpleName());
 		}
 	}
 	

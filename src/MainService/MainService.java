@@ -15,6 +15,8 @@ public class MainService extends Service {
 	public MainService(InputStream in,OutputStream out) {
 		super(in,out);
 		
+		description = "Central Service Directory. Gives you what you want if available";
+		
 		//insert services under main service
 		addService(new PetService(in,out));
 	}
@@ -22,17 +24,17 @@ public class MainService extends Service {
 	@Override
 	public ServiceReturnType start() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(this.in));
-		Controller controller = new Controller(serviceDirectoryTable,out);
+		Controller controller = new Controller(serviceDirectoryTable,serviceDirectory,out);
 		String input;
 		Integer returnValue;
 		
-		write("=============================================\n");
+		write("========================================================\n");
 		write("Welcome to Service Terminal\n");
-		write("Type \"show\" to show available options.\n");
+		write("Type \"help\" to show available options.\n");
+		write("========================================================\n");
 		
 		do {
-			write("Main: Enter your option here >> ");
-			
+			write("[Main] Enter your option here >> ");
 			input = br.readLine();
 			returnValue = controller.process(input);
 			

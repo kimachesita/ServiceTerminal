@@ -5,6 +5,7 @@ public class ExitHandler extends Handler {
 	
 	public ExitHandler(AnimalList t, IOInterface o) {
 		super(t, o);
+		description = "Exit Service";
 	}
 
 	@Override

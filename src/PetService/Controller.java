@@ -9,26 +9,34 @@ public class Controller {
 	public IOInterface io;
 	
 	public Controller(IOInterface o) {
+		io = o;
+		
 		AnimalList list = new AnimalList("Animal List", o);
 		hm = new HashMap<>();
+		hm.put("help", new HelpHandler(list, o));
 		hm.put("show", new ShowHandler(list, o));
 		hm.put("add", new AddPetHandler(list, o));
 		hm.put("simulate", new SimulateHandler(list, o));
 		hm.put("exit", new ExitHandler(list, o));
-		io = o;
+		
+		((HelpHandler) hm.get("help")).setDirectory(hm);
+		
 	}
 	
 	public int process(String input){
 		Handler h;
-		String word = new String();
+		String handlerName = new String();
 		
 		try {
 			if(input.matches("\\w*:.+")) {
-				word = "add";
-			}else {
-				word = input;
+				handlerName = "add";
+			}else if(input.matches("add\\s.+:.+")) {
+				handlerName = "add";
+				input = input.split("\\s",2)[1];
+			}else{
+				handlerName = input;
 			}
-			h = hm.get(word);
+			h = hm.get(handlerName);
 			return h.execute(input);
 		} catch (NullPointerException e) {
 			io.writeln("No handler for command.");

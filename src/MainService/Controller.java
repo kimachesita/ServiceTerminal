@@ -4,19 +4,21 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import Server.Service;
+
 public class Controller {
 
 	private HashMap<String,Handler> handlerList = new HashMap<>();
 	private OutputStream out;
 	
-	public Controller(HashMap<Integer, String> t, OutputStream o) {
+	public Controller(HashMap<Integer, String> t, HashMap<String,Service> h, OutputStream o) {
 		out = o;
 		for(Map.Entry<Integer, String> entry : t.entrySet()) {
-			handlerList.put(entry.getValue(),new OptionHandler(entry.getKey()));
+			handlerList.put(entry.getValue(),new OptionHandler(entry.getKey(),h.get(entry.getValue()).description));
 		}
-		handlerList.put("show", new ShowHandler());
+		handlerList.put("help", new HelpHandler());
 		handlerList.put("exit", new ExitHandler());
-		((ShowHandler) handlerList.get("show")).setConfig(handlerList,out);
+		((HelpHandler) handlerList.get("help")).setConfig(handlerList,out);
 		
 	}
 	

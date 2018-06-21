@@ -5,12 +5,13 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class ShowHandler extends Handler {
+public final class HelpHandler extends Handler {
 
 	HashMap<String,Handler> handlerList = new HashMap<>();
 	private OutputStream out;
 	
-	public ShowHandler() {
+	public HelpHandler() {
+		description = "Show Service Command Options";
 	}
 	
 	public void setConfig(HashMap<String,Handler> h, OutputStream o) {
@@ -25,9 +26,9 @@ public final class ShowHandler extends Handler {
 	@Override
 	public int execute() throws IOException {
 		Integer i = 1;
-		write("Available Options:\n");
+		write("\nAvailable Options:\n");
 		for(Map.Entry<String,Handler> entry: handlerList.entrySet()) {
-			write(i++ + ": " + entry.getKey() + "\n");
+			write(i++ + ": " + entry.getKey() + " (" + entry.getValue().description +")\n");
 		}
 		return -2;
 	}
